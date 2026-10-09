@@ -1,52 +1,305 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>6 ORD Gate Prod Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background: black;
-        }
+  <title>6 GIDS Laptop Dashboard</title>
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            width: 100vw;
-            height: 100vh;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-        iframe {
-            width: 300%;
-            height: 200%;
-            border: none;
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: #080c12;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+    }
 
-            transform: scale(0.3333, 0.5);
-            transform-origin: top left;
-        }
-    </style>
+    #dashboard {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: #080c12;
+    }
+
+    /* Controls disappear when the dashboard enters fullscreen. */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 8px 12px;
+      background: #17202c;
+    }
+
+    .toolbar-title {
+      margin-right: auto;
+      font-size: 15px;
+    }
+
+    .toolbar label {
+      font-size: 13px;
+    }
+
+    .toolbar input {
+      width: 80px;
+      padding: 5px;
+      border: 1px solid #536075;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 7px 12px;
+      border: none;
+      border-radius: 4px;
+      background: #dbe7f7;
+      color: #101722;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ffffff;
+    }
+
+    /* Three columns and two rows. */
+    .grid {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 4px;
+      padding: 4px;
+    }
+
+    .panel {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      border: 1px solid #354153;
+      background: #000000;
+    }
+
+    .panel-header {
+      flex-shrink: 0;
+      height: 26px;
+      padding: 5px 8px;
+      background: #17202c;
+      color: #ffffff;
+      font-size: 13px;
+      line-height: 16px;
+    }
+
+    .viewport {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      background: #000000;
+    }
+
+    iframe {
+      position: absolute;
+      display: block;
+      border: none;
+      background: #ffffff;
+      transform-origin: top left;
+    }
+
+    #dashboard:fullscreen .toolbar {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="grid">
+  <div id="dashboard">
+    <header class="toolbar">
+      <span class="toolbar-title">ORD — Six Screen GIDS Dashboard</span>
 
-        <iframe src="https://ord-ws.visionairfids.com/?secret=CON_G_G6"></iframe>
+      <label>
+        Source width:
+        <input
+          id="sourceWidth"
+          type="number"
+          min="320"
+          max="7680"
+          value="1920"
+        >
+      </label>
 
-        <iframe src="https://ord-ws.visionairfids.com/?secret=CON_G_G10"></iframe>
+      <label>
+        Source height:
+        <input
+          id="sourceHeight"
+          type="number"
+          min="240"
+          max="4320"
+          value="1200"
+        >
+      </label>
 
-        <iframe src="https://ord-ws.visionairfids.com/?secret=CON_G_G11"></iframe>
+      <button id="applySize" type="button">Apply size</button>
+      <button id="reloadAll" type="button">Reload all</button>
+      <button id="fullscreen" type="button">Full screen</button>
+    </header>
 
-        <iframe src="https://ord-ws.visionairfids.com/?secret=CON_G_G12"></iframe>
+    <main class="grid">
+      <section class="panel">
+        <div class="panel-header">Concourse: G Gate: G6</div>
+        <div class="viewport">
+          <iframe
+            title="CONGG6 Flight Information"
+            src="https://ord-ws.visionairfids.com/?secret=CON_G_G6"
+            referrerpolicy="no-referrer"
+          ></iframe>
+        </div>
+      </section>
 
-        <iframe src="https://ord-ws.visionairfids.com/?secret=CON_G_G14"></iframe>
+      <section class="panel">
+        <div class="panel-header">Concourse: G Gate: G10</div>
+        <div class="viewport">
+          <iframe
+            title="CONGG10 Flight Information"
+            src="https://ord-ws.visionairfids.com/?secret=CON_G_G10"
+            referrerpolicy="no-referrer"
+          ></iframe>
+        </div>
+      </section>
 
-        <iframe src="https://ord-ws.visionairfids.com/?secret=CON_G_G20"></iframe>
+      <section class="panel">
+        <div class="panel-header">Concourse: G Gate: G11</div>
+        <div class="viewport">
+          <iframe
+            title="CONGG11 Flight Information"
+            src="https://ord-ws.visionairfids.com/?secret=CON_G_G11"
+            referrerpolicy="no-referrer"
+          ></iframe>
+        </div>
+      </section>
 
-    </div>
+      <section class="panel">
+        <div class="panel-header">Concourse: G Gate: G12</div>
+        <div class="viewport">
+          <iframe
+            title="CONGG12 Flight Information"
+            src="https://ord-ws.visionairfids.com/?secret=CON_G_G12"
+            referrerpolicy="no-referrer"
+          ></iframe>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">Concourse: G Gate: G14</div>
+        <div class="viewport">
+          <iframe
+            title="CONGG14 Flight Information"
+            src="https://ord-ws.visionairfids.com/?secret=CON_G_G14"
+            referrerpolicy="no-referrer"
+          ></iframe>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">Concourse: G Gate: G20</div>
+        <div class="viewport">
+          <iframe
+            title="CONGG20 Flight Information"
+            src="https://ord-ws.visionairfids.com/?secret=CON_G_G20"
+            referrerpolicy="no-referrer"
+          ></iframe>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const dashboard = document.getElementById("dashboard");
+    const viewports = document.querySelectorAll(".viewport");
+
+    let sourceWidth = 1920;
+    let sourceHeight = 1200;
+
+    function resizeFrames() {
+      viewports.forEach((viewport) => {
+        const frame = viewport.querySelector("iframe");
+
+        const availableWidth = viewport.clientWidth;
+        const availableHeight = viewport.clientHeight;
+
+        if (!availableWidth || !availableHeight) return;
+
+        const scaleX = availableWidth / sourceWidth;
+        const scaleY = availableHeight / sourceHeight;
+
+        frame.style.width = `${sourceWidth}px`;
+        frame.style.height = `${sourceHeight}px`;
+
+        // Fill the tile in both directions.
+        frame.style.transform = `scale(${scaleX}, ${scaleY})`;
+
+        frame.style.left = "0px";
+        frame.style.top = "0px";
+      });
+    }
+
+    document.getElementById("applySize").addEventListener("click", () => {
+      const widthInput = document.getElementById("sourceWidth");
+      const heightInput = document.getElementById("sourceHeight");
+
+      if (!widthInput.reportValidity() ||
+          !heightInput.reportValidity()) {
+        return;
+      }
+
+      const width = Number(widthInput.value);
+      const height = Number(heightInput.value);
+
+      if (!Number.isFinite(width) || !Number.isFinite(height) ||
+          width < 320 || width > 7680 ||
+          height < 240 || height > 4320) {
+        alert("Enter a valid source width and height.");
+        return;
+      }
+
+      sourceWidth = width;
+      sourceHeight = height;
+
+      resizeFrames();
+    });
+
+    document.getElementById("reloadAll").addEventListener("click", () => {
+      document.querySelectorAll("iframe").forEach((frame) => {
+        const currentURL = frame.src;
+        frame.src = currentURL;
+      });
+    });
+
+    document.getElementById("fullscreen").addEventListener("click", async () => {
+      try {
+        await dashboard.requestFullscreen();
+      } catch (error) {
+        alert("Fullscreen is unavailable. Use your browser's fullscreen option.");
+      }
+    });
+
+    const resizeObserver = new ResizeObserver(resizeFrames);
+    viewports.forEach((viewport) => resizeObserver.observe(viewport));
+
+    window.addEventListener("resize", resizeFrames);
+    document.addEventListener("fullscreenchange", resizeFrames);
+
+    resizeFrames();
+  </script>
 </body>
 </html>
